@@ -51,7 +51,16 @@ namespace PHATASS.Utils.Extensions
 			PropertyInfo[] properties = type.GetProperties(propertyBindingFlags);
 			foreach (PropertyInfo property in properties)
 			{
-				ApplyProperty(property, _this, sample);
+					//ApplyProperty(property, _this, sample);
+
+				try
+				{
+					ApplyProperty(property, _this, sample);
+				}
+				catch (Exception e)
+				{
+					Debug.LogException(e);//, _this);
+				}
 			}
 
 			/*
@@ -66,6 +75,10 @@ namespace PHATASS.Utils.Extensions
 			if (type != typeof(Component) && type.BaseType != typeof(Component))
 			{
 				PropagateApplySettingsRecursive<T>(_this, sample);
+			}
+			else
+			{
+				Debug.Log("ApplySettingsRecursive: Finished setting up component");
 			}
 		}
 
